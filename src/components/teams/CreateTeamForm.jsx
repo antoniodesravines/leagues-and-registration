@@ -2,16 +2,26 @@ import React, { useState } from 'react';
 import { X } from 'lucide-react';
 import { useAppContext } from '../../context/AppContext';
 
-interface CreateTeamFormProps {
-  onClose: () => void;
-}
-
-const CreateTeamForm: React.FC<CreateTeamFormProps> = ({ onClose }) => {
+/**
+ * CreateTeamForm component
+ *
+ * Displays a modal form for creating a new team.
+ *
+ * Props:
+ * - onClose: Function called when the modal is closed.
+ */
+const CreateTeamForm = ({ onClose }) => {
   const [teamName, setTeamName] = useState('');
-  const [joinType, setJoinType] = useState<'open' | 'invite'>('open');
+  const [joinType, setJoinType] = useState('open');
   const { createTeam, activeSport } = useAppContext();
-  
-  const handleSubmit = (e: React.FormEvent) => {
+
+  /**
+   * Handle form submission:
+   * - Validates the input.
+   * - Calls createTeam with the form data.
+   * - Closes the modal.
+   */
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (teamName.trim() && activeSport) {
       createTeam({
@@ -22,18 +32,24 @@ const CreateTeamForm: React.FC<CreateTeamFormProps> = ({ onClose }) => {
       onClose();
     }
   };
-  
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
+        {/* Modal Header */}
         <div className="bg-[#194A8D] text-white px-6 py-4 flex justify-between items-center rounded-t-lg">
           <h3 className="font-semibold text-lg">Create a New Team</h3>
-          <button onClick={onClose} className="text-white hover:text-[#FDB927] transition-colors">
+          <button
+            onClick={onClose}
+            className="text-white hover:text-[#FDB927] transition-colors"
+          >
             <X className="h-5 w-5" />
           </button>
         </div>
-        
+
+        {/* Form */}
         <form onSubmit={handleSubmit} className="p-6">
+          {/* Team Name Input */}
           <div className="mb-4">
             <label htmlFor="teamName" className="block text-gray-700 font-medium mb-2">
               Team Name
@@ -48,10 +64,12 @@ const CreateTeamForm: React.FC<CreateTeamFormProps> = ({ onClose }) => {
               required
             />
           </div>
-          
+
+          {/* Join Type Radio Buttons */}
           <div className="mb-6">
             <span className="block text-gray-700 font-medium mb-2">Team Visibility</span>
             <div className="space-y-2">
+              {/* Open Option */}
               <label className="flex items-center">
                 <input
                   type="radio"
@@ -62,7 +80,8 @@ const CreateTeamForm: React.FC<CreateTeamFormProps> = ({ onClose }) => {
                 />
                 <span className="ml-2">Open (Anyone can join)</span>
               </label>
-              
+
+              {/* Invite Only Option */}
               <label className="flex items-center">
                 <input
                   type="radio"
@@ -75,7 +94,8 @@ const CreateTeamForm: React.FC<CreateTeamFormProps> = ({ onClose }) => {
               </label>
             </div>
           </div>
-          
+
+          {/* Action Buttons */}
           <div className="flex justify-end space-x-3">
             <button
               type="button"

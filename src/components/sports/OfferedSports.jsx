@@ -2,9 +2,16 @@ import React from 'react';
 import { seasons, seasonLabels } from '../../data/sportsData';
 import SportCard from './SportCard';
 
-const OfferedSports: React.FC = () => {
+/**
+ * OfferedSports component
+ *
+ * Renders a list of all sports grouped by season,
+ * including a legend explaining registration status.
+ */
+const OfferedSports = () => {
   return (
     <div className="space-y-6">
+      {/* Page Title */}
       <h2 className="text-2xl font-bold text-gray-800">Offered Sports</h2>
       
       {/* Registration Status Legend */}
@@ -24,11 +31,15 @@ const OfferedSports: React.FC = () => {
         </div>
       </div>
       
+      {/* Render sports grouped by season */}
       {Object.entries(seasons).map(([season, sports]) => (
         <div key={season} className="space-y-4">
+          {/* Season Heading */}
           <h3 className="text-xl font-semibold text-gray-700 border-b pb-2">
-            {seasonLabels[season as keyof typeof seasonLabels]} Season
+            {seasonLabels[season]} Season
           </h3>
+          
+          {/* List of Sport Cards */}
           <div className="grid grid-cols-1 gap-4">
             {sports.map((sport) => (
               <SportCard key={sport.id} sport={sport} />
